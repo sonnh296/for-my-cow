@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nhập Tên Bạn</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-x: hidden;
+      }
+
+      .container {
+        text-align: center;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        max-width: 500px;
+        width: 90%;
+      }
+
+      h1 {
+        color: white;
+        margin-bottom: 2rem;
+        font-size: 2.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .input-group {
+        margin-bottom: 2rem;
+      }
+
+      input[type="text"] {
+        padding: 15px 20px;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 25px;
+        width: 100%;
+        max-width: 300px;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      input[type="text"]:focus {
+        outline: none;
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      button {
+        padding: 12px 30px;
+        font-size: 1.1rem;
+        background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .cow-container {
+        display: none;
+        margin-top: 2rem;
+        animation: bounceIn 1s ease-out;
+      }
+
+      .cow-container.show {
+        display: block;
+      }
+
+      .cow-ascii {
+        font-family: "Courier New", monospace;
+        font-size: 1.2rem;
+        color: white;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 1rem;
+        border-radius: 10px;
+        white-space: pre-line;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        animation: wiggle 2s infinite;
+      }
+
+      .message {
+        margin-top: 1rem;
+        padding: 1rem;
+        background: rgba(255, 193, 7, 0.2);
+        border: 2px solid #ffc107;
+        border-radius: 15px;
+        color: white;
+        font-size: 1.3rem;
+        font-weight: bold;
+        animation: pulse 1s infinite alternate;
+      }
+
+      .sparkles {
+        display: none;
+        position: fixed;
+        pointer-events: none;
+        z-index: 1000;
+      }
+
+      .sparkle {
+        position: absolute;
+        color: #ffd700;
+        font-size: 20px;
+        animation: sparkle 1.5s ease-out forwards;
+      }
+
+      @keyframes bounceIn {
+        0% {
+          opacity: 0;
+          transform: scale(0.3) translateY(-50px);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.1) translateY(0);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+
+      @keyframes wiggle {
+        0%,
+        100% {
+          transform: rotate(0deg);
+        }
+        25% {
+          transform: rotate(-2deg);
+        }
+        75% {
+          transform: rotate(2deg);
+        }
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(1.05);
+        }
+      }
+
+      @keyframes sparkle {
+        0% {
+          opacity: 1;
+          transform: scale(0) rotate(0deg);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1) rotate(180deg);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(0) rotate(360deg);
+        }
+      }
+
+      .shake {
+        animation: shake 0.5s;
+      }
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        10%,
+        30%,
+        50%,
+        70%,
+        90% {
+          transform: translateX(-5px);
+        }
+        20%,
+        40%,
+        60%,
+        80% {
+          transform: translateX(5px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🌟 Nhập tên bạn đi! 🌟</h1>
+      <div class="input-group">
+        <input
+          type="text"
+          id="nameInput"
+          placeholder="Nhập tên của bạn..."
+          maxlength="20"
+        />
+        <br />
+        <button onclick="checkName()">Xác nhận</button>
+      </div>
+
+      <div id="cowContainer" class="cow-container">
+        <div class="cow-ascii" id="cowAscii">
+          ___________ < MOO MOO! 🐄 > ----------- \ ^__^ \ (oo)\_______ (__)\
+          )\/\ ||----w | || ||
+        </div>
+        <div class="message">
+          <p id="cowMessage">Xin chào Thu! Bạn là con bò bò nhất! 🐄💕</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sparkles" id="sparkles"></div>
+
+    <script>
+      let cowSound;
+
+      // Tạo âm thanh con bò
+      function createCowSound() {
+        const audioContext = new (window.AudioContext ||
+          window.webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+
+        oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
+        oscillator.frequency.setValueAtTime(
+          150,
+          audioContext.currentTime + 0.5
+        );
+        oscillator.frequency.setValueAtTime(180, audioContext.currentTime + 1);
+
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(
+          0.01,
+          audioContext.currentTime + 1.5
+        );
+
+        oscillator.start();
+        oscillator.stop(audioContext.currentTime + 1.5);
+      }
+
+      function createSparkles() {
+        const sparklesContainer = document.getElementById("sparkles");
+        sparklesContainer.style.display = "block";
+
+        for (let i = 0; i < 20; i++) {
+          const sparkle = document.createElement("div");
+          sparkle.className = "sparkle";
+          sparkle.innerHTML = "✨";
+          sparkle.style.left = Math.random() * window.innerWidth + "px";
+          sparkle.style.top = Math.random() * window.innerHeight + "px";
+          sparklesContainer.appendChild(sparkle);
+
+          setTimeout(() => {
+            sparkle.remove();
+          }, 1500);
+        }
+
+        setTimeout(() => {
+          sparklesContainer.style.display = "none";
+        }, 1500);
+      }
+
+      function shakeScreen() {
+        document.body.classList.add("shake");
+        setTimeout(() => {
+          document.body.classList.remove("shake");
+        }, 500);
+      }
+
+      function checkName() {
+        const nameInput = document.getElementById("nameInput");
+        const name = nameInput.value.trim().toLowerCase();
+        const cowContainer = document.getElementById("cowContainer");
+        const cowMessage = document.getElementById("cowMessage");
+
+        if (name === "thu") {
+          // Hiệu ứng đặc biệt cho Thu
+          cowContainer.classList.add("show");
+          cowMessage.innerHTML = `Xin chào ${nameInput.value}! Bạn là con bò dễ thương nhất! 🐄💕<br><small>Moo moo moo! 🎉</small>`;
+
+          // Tạo âm thanh
+          try {
+            createCowSound();
+          } catch (e) {
+            console.log("Không thể tạo âm thanh");
+          }
+
+          // Hiệu ứng visual
+          createSparkles();
+          shakeScreen();
+
+          // Thay đổi background
+          document.body.style.background =
+            "linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%)";
+
+          // Ẩn input
+          setTimeout(() => {
+            document.querySelector(".input-group").style.opacity = "0.5";
+          }, 1000);
+        } else if (name === "") {
+          alert("Hãy nhập tên của bạn đi!");
+        } else {
+          // Với tên khác
+          cowContainer.classList.remove("show");
+          alert(
+            `Xin chào ${nameInput.value}! Bạn có muốn thử tên khác không? 😉`
+          );
+        }
+      }
+
+      // Enter để submit
+      document
+        .getElementById("nameInput")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            checkName();
+          }
+        });
+
+      // Hiệu ứng typing cho input
+      document
+        .getElementById("nameInput")
+        .addEventListener("input", function (e) {
+          const name = e.target.value.toLowerCase();
+          if (name === "thu") {
+            e.target.style.borderColor = "#ff6b6b";
+            e.target.style.boxShadow = "0 0 20px rgba(255, 107, 107, 0.5)";
+          } else {
+            e.target.style.borderColor = "#ddd";
+            e.target.style.boxShadow = "0 4px 15px rgba(0, 0, 0, 0.1)";
+          }
+        });
+    </script>
+  </body>
+</html>
