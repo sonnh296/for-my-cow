@@ -322,6 +322,30 @@
           setTimeout(() => {
             document.querySelector(".input-group").style.opacity = "0.5";
           }, 1000);
+        } else if (name === "sơn" || name === "nhs") {
+          // Hiệu ứng cho Sơn và NHS
+          cowContainer.classList.add("show");
+          cowMessage.innerHTML = `Xin chào ${nameInput.value}! Bạn đẹp trai! 😎✨`;
+
+          // Tạo âm thanh
+          try {
+            createCowSound();
+          } catch (e) {
+            console.log("Không thể tạo âm thanh");
+          }
+
+          // Hiệu ứng visual
+          createSparkles();
+          shakeScreen();
+
+          // Thay đổi background
+          document.body.style.background =
+            "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)";
+
+          // Ẩn input
+          setTimeout(() => {
+            document.querySelector(".input-group").style.opacity = "0.5";
+          }, 1000);
         } else if (name === "") {
           alert("Hãy nhập tên của bạn đi!");
         } else {
@@ -350,6 +374,9 @@
           if (name === "thu") {
             e.target.style.borderColor = "#ff6b6b";
             e.target.style.boxShadow = "0 0 20px rgba(255, 107, 107, 0.5)";
+          } else if (name === "sơn" || name === "nhs") {
+            e.target.style.borderColor = "#4facfe";
+            e.target.style.boxShadow = "0 0 20px rgba(79, 172, 254, 0.5)";
           } else {
             e.target.style.borderColor = "#ddd";
             e.target.style.boxShadow = "0 4px 15px rgba(0, 0, 0, 0.1)";
